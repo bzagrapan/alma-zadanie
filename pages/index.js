@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { axiosInstance } from "../services/Axios";
 import Board from "../components/Board/Board";
 import AddBoard from "../components/AddBoard/AddBoard";
+import { useRouter } from "next/router";
 
 //Get boards data on the server side.
 export const getServerSideProps = async () => {
@@ -32,16 +33,32 @@ export const getServerSideProps = async () => {
 
 /* TODO: Pre zjednodusenie riesenia sa novovytvorene boardy neukladaju do json suboru(fake db).
 Tym padom sa po refreshi vyrendruju len default data. 
-Dalo by sa to spravit jednoducho zavolanim spravnej API a ulozenim dat na BE casti.  */
+Dalo by sa to spravit zavolanim spravnej API a ulozenim dat na BE casti.  */
 function BoardsPage({ boards }) {
   const [currentBoards, setCurrentBoards] = useState(boards);
+
+  const router = useRouter();
+
+  const handleNavigation = (data) => {
+    router.push(
+      {
+        pathname: "/board",
+        query: data,
+      },
+      "/board"
+    );
+  };
 
   return (
     <div>
       <h1 className="header">Boards page</h1>
       <div className="boards-wrapper">
         {currentBoards.map((item) => {
-          return <Board key={item.id} name={item.name} id={item.id} />;
+          return (
+            <div key={item.id} onClick={() => handleNavigation(item)}>
+              <Board name={item.name} />
+            </div>
+          );
         })}
         <AddBoard
           handleAddBoard={(newBoard) =>

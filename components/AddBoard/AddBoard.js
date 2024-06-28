@@ -5,7 +5,6 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { green } from "@mui/material/colors";
 import { v4 as uuidv4 } from "uuid";
 
-// TODO: Dalo by sa viac pohrat s vizualom.
 function AddBoard({ handleAddBoard }) {
   const [boardName, setBoardName] = useState("");
 

@@ -3,10 +3,10 @@ import { Card, CardActionArea } from "@mui/material";
 import styles from "./Board.module.css";
 
 // TODO: Dalo by sa viac pohrat s vizualom.
-function Board({ name, id }) {
+function Board({ name }) {
   return (
     <Card sx={{ minWidth: 200 }}>
-      <CardActionArea onClick={() => console.log(id)}>
+      <CardActionArea>
         <div className={styles.boardBasicWrapper}>{name}</div>
       </CardActionArea>
     </Card>
