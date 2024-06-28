@@ -1,5 +1,6 @@
 import React from "react";
 import { axiosInstance } from "../../services/Axios";
+import BoardDetail from "../../components/BoardDetail/BoardDetail";
 
 //Get boards data on the server side.
 export const getServerSideProps = async (context) => {
@@ -28,9 +29,13 @@ export const getServerSideProps = async (context) => {
   }
 };
 
-function BoardPage(props) {
-  console.log(props.board);
-  return <>Hello from board</>;
+function BoardPage({ board }) {
+  return (
+    <div>
+      <h1 className="header">{board.name}</h1>
+      <BoardDetail data={board} />
+    </div>
+  );
 }
 
 export default BoardPage;
