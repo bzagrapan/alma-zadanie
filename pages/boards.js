@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { axiosInstance } from "../services/Axios";
 import Board from "../components/Board/Board";
+import AddBoard from "../components/AddBoard/AddBoard";
 
 //Get boards data on the server side.
 export const getServerSideProps = async () => {
@@ -31,18 +32,22 @@ export const getServerSideProps = async () => {
 
 /* TODO: Pre zjednodusenie riesenia sa novovytvorene boardy neukladaju do json suboru(fake db).
 Tym padom sa po refreshi vyrendruju len default data. 
-Dalo by sa to spravit jednoducho zavolanim spravnej API a ulozenim dat. Takisto by potom tato page
-nemapovala priamo props.boards, ale vytvoril by som state, kde by sa drzali vzdy
-up to date data.  */
+Dalo by sa to spravit jednoducho zavolanim spravnej API a ulozenim dat na BE casti.  */
 function BoardsPage({ boards }) {
-  console.log(boards);
+  const [currentBoards, setCurrentBoards] = useState(boards);
+
   return (
     <div>
       <h1 className="header">Boards page</h1>
       <div className="boards-wrapper">
-        {boards.map((item) => {
+        {currentBoards.map((item) => {
           return <Board key={item.id} name={item.name} id={item.id} />;
         })}
+        <AddBoard
+          handleAddBoard={(newBoard) =>
+            setCurrentBoards([...currentBoards, newBoard])
+          }
+        />
       </div>
     </div>
   );

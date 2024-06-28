@@ -6,7 +6,7 @@ import { useEffect } from "react";
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 
-  //Redirect the starting point of app to /boards by default
+  //Redirect the starting point of app to /boards by default. TODO(bug): initial page load flickers.
   useEffect(() => {
     // Check if the current route is not already /boards
     if (router.asPath !== "/boards") {
@@ -19,6 +19,10 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>Alma-zadanie</title>
         <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
       </Head>
 
       <main className="page-wrapper">
