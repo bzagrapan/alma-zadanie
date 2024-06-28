@@ -22,7 +22,12 @@ function BoardDetail({ data }) {
     setBoard(newBoard);
   };
 
-  console.log(board);
+  const addNewList = (list) => {
+    let newBoard = _.cloneDeep(board);
+    newBoard.lists.push(list);
+    setBoard(newBoard);
+  };
+
   return (
     <div className={styles.boardDetailListWrapper}>
       {board.lists.map((list) => {
@@ -49,6 +54,13 @@ function BoardDetail({ data }) {
           </Card>
         );
       })}
+      <div>
+        <AddItem
+          label="Add new list"
+          type="list"
+          handleAddItem={(item) => addNewList(item)}
+        />
+      </div>
     </div>
   );
 }
