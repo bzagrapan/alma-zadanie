@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { axiosInstance } from "../services/Axios";
 import Board from "../components/Board/Board";
 import AddBoard from "../components/AddBoard/AddBoard";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 //Get boards data on the server side.
 export const getServerSideProps = async () => {
@@ -21,7 +21,6 @@ export const getServerSideProps = async () => {
     }
 
     const boards = res.data.data;
-    console.log("serverSide", boards);
     return {
       props: { boards },
     };
@@ -31,22 +30,20 @@ export const getServerSideProps = async () => {
   }
 };
 
-/* TODO: Pre zjednodusenie riesenia sa novovytvorene boardy neukladaju do json suboru(fake db).
-Tym padom sa po refreshi vyrendruju len default data. 
-Dalo by sa to spravit zavolanim spravnej API a ulozenim dat na BE casti.  */
 function BoardsPage({ boards }) {
   const [currentBoards, setCurrentBoards] = useState(boards);
 
-  const router = useRouter();
-
-  const handleNavigation = (data) => {
-    router.push(
-      {
-        pathname: "/board",
-        query: data,
-      },
-      "/board"
-    );
+  const addBoard = async (newBoard) => {
+    axiosInstance
+      .post("/api/boards", newBoard)
+      .then((newBoards) => {
+        const boardsArr = newBoards?.data?.data;
+        console.log(boardsArr);
+        boardsArr && setCurrentBoards(boardsArr);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -55,16 +52,12 @@ function BoardsPage({ boards }) {
       <div className="boards-wrapper">
         {currentBoards.map((item) => {
           return (
-            <div key={item.id} onClick={() => handleNavigation(item)}>
+            <Link key={item.id} href={`/board/${item.id}`}>
               <Board name={item.name} />
-            </div>
+            </Link>
           );
         })}
-        <AddBoard
-          handleAddBoard={(newBoard) =>
-            setCurrentBoards([...currentBoards, newBoard])
-          }
-        />
+        <AddBoard handleAddBoard={(newBoard) => addBoard(newBoard)} />
       </div>
     </div>
   );
