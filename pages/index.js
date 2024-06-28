@@ -10,7 +10,7 @@ export const getServerSideProps = async () => {
   const errorProps = { props: { boards: [] } };
 
   try {
-    //This uri would change dynamically depending on it's environment. For the testing purposes, I left it hardcoded.
+    //This localhost uri would change dynamically depending on it's environment. For the testing purposes, I left it hardcoded.
     const apiUrl = "http://localhost:3000/api/boards";
     const res = await axiosInstance.get(apiUrl);
 

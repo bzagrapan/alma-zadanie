@@ -9,7 +9,7 @@ export const getServerSideProps = async (context) => {
 
   try {
     const { query } = context;
-    //This uri would change dynamically depending on it's environment. For the testing purposes, I left it hardcoded.
+    //This localhost uri would change dynamically depending on it's environment. For the testing purposes, I left it hardcoded.
     const apiUrl = `http://localhost:3000/api/boardDetail/${query.id}`;
     const res = await axiosInstance.get(apiUrl, query.id);
 
