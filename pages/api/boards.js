@@ -1,5 +1,12 @@
-export const getBoards = async () => {
-  return { data: JSON.stringify("Hello from BE") };
+import { boardsDb } from "../../db";
+
+const getBoards = async () => {
+  try {
+    return { data: boardsDb.list() };
+  } catch (error) {
+    console.log(error);
+    return { data: [] };
+  }
 };
 
 //This API function is available at /api/boards
