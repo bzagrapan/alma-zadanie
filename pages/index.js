@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { axiosInstance } from "../services/Axios";
 import Board from "../components/Board/Board";
-import AddBoard from "../components/AddBoard/AddBoard";
 import Link from "next/link";
+import AddItem from "../components/AddItem/AddItem";
 
 //Get boards data on the server side.
 export const getServerSideProps = async () => {
@@ -57,7 +57,11 @@ function BoardsPage({ boards }) {
             </Link>
           );
         })}
-        <AddBoard handleAddBoard={(newBoard) => addBoard(newBoard)} />
+        <AddItem
+          label={"Add new board"}
+          handleAddItem={(newBoard) => addBoard(newBoard)}
+          type="board"
+        />
       </div>
     </div>
   );
