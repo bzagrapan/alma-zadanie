@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <main className="page-wrapper">
         <Component {...pageProps} />
       </main>
     </div>
